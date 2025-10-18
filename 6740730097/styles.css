@@ -1,0 +1,71 @@
+:root{
+  --bg:#fff;
+  --fg:#111;
+  --accent:#0b72ff;
+  --muted:#555;
+}
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --fg:#0f1721;
+  --accent:#0b72ff;
+  --muted:#6b7280;
+  --radius:12px;
+}
+
+*{box-sizing:border-box}
+body{font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial; background:var(--bg); color:var(--fg); margin:0; padding:0;-webkit-font-smoothing:antialiased}
+
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px}
+h1{margin:0;font-size:20px}
+.lang-switch{display:flex;align-items:center}
+.lang-switch button{margin-left:8px;padding:8px 12px;border:1px solid rgba(15,23,33,0.06);background:transparent;border-radius:8px;cursor:pointer;font-weight:600;position:relative;z-index:1}
+.lang-switch button[aria-checked="true"]{background:var(--accent);color:white;border-color:var(--accent);box-shadow:0 6px 18px rgba(11,114,255,0.12)}
+
+.container{max-width:900px;margin:28px auto;padding:0 16px}
+.hero{background:linear-gradient(90deg, rgba(11,114,255,0.08), rgba(11,114,255,0.03));padding:20px;border-radius:16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.hero .title{font-size:18px;font-weight:700}
+.hero .subtitle{color:var(--muted);font-size:13px}
+
+.card{background:var(--card);border-radius:var(--radius);box-shadow:0 6px 18px rgba(16,24,40,0.06);padding:20px;margin-bottom:16px}
+.card h2{margin:0 0 12px 0;font-size:16px}
+.card p{color:var(--fg);line-height:1.8}
+
+/* Section heading (h3) styling for clarity */
+h3{margin-top:18px;margin-bottom:10px;font-size:15px;display:flex;align-items:center;gap:12px}
+h3:before{content:'';display:inline-block;width:4px;height:20px;background:var(--accent);border-radius:2px;margin-left:0;margin-right:6px}
+h3 + p{margin-top:0}
+
+/* Lists inside cards */
+.card ul{padding-left:20px;margin-top:8px;margin-bottom:8px}
+.card li{margin-bottom:6px}
+
+/* muted small text (for dates) */
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+nav ul{display:flex;gap:12px;padding:0;margin:0;list-style:none}
+nav a{display:inline-block;padding:8px 12px;background:transparent;border-radius:8px;color:var(--accent);text-decoration:none;font-weight:600}
+
+/* Q&A accordion */
+.accordion{margin-top:8px}
+.accordion-item{border-top:1px solid rgba(15,23,33,0.04)}
+/* remove top border for the first accordion item */
+.accordion > .accordion-item:first-child,
+details.accordion-item:first-child{border-top:0}
+details.accordion-item{position:relative;padding:0;margin:0}
+details.accordion-item summary{list-style:none;cursor:pointer;padding:14px 0;display:flex;align-items:center;justify-content:space-between;font-weight:600;border:0}
+/* hide default marker */
+details.accordion-item summary::-webkit-details-marker{display:none}
+details.accordion-item .chev{transition:transform .22s ease}
+/* content wrap */
+.accordion-item .accordion-content{padding:0 0 0 0;overflow:hidden}
+/* animate height using max-height trick: set a large max-height when open */
+details.accordion-item .accordion-content{max-height:0;transition:max-height .35s ease, padding .2s ease}
+details.accordion-item[open] .accordion-content{padding-top:8px;padding-bottom:12px;max-height:400px}
+details.accordion-item[open] .chev{transform:rotate(180deg)}
+details.accordion-item .accordion-content p{margin:0;color:var(--fg);line-height:1.6}
+
+@media (max-width:520px){
+  .hero{flex-direction:column;align-items:flex-start;gap:8px}
+}
