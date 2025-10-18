@@ -54,7 +54,7 @@ fetch('https://raw.githubusercontent.com/rikuto-dev/app/main/AppData.json')
     ];
     linkClassMap.forEach(link => {
       document.querySelectorAll(`.${link.className}`).forEach(el => {
-        el.href = `https://${appName}.netlify.app/${appId}/${link.path}`;
+        el.href = `https://${appName}.netlify.app/${appId}/${link.path}?lang=ja`;
       });
     });
 
