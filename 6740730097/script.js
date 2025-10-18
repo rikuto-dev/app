@@ -98,9 +98,83 @@
       setLang(lang);
     }
 
+    // allow URL parameter or hash to request a theme (dark/light)
+    function normalizeThemeCode(v){
+      if(!v) return null;
+      v = String(v).toLowerCase();
+      if(v === 'dark' || v === 'darkmode' || v === 'dm') return 'dark';
+      if(v === 'light' || v === 'lightmode' || v === 'lm') return 'light';
+      return null;
+    }
+
+    var urlTheme = (function(){
+      try{
+        var params = new URLSearchParams(window.location.search);
+        if(params.has('theme')){
+          var t = normalizeThemeCode(params.get('theme'));
+          if(t) return t;
+        }
+        if(params.has('mode')){
+          var m = normalizeThemeCode(params.get('mode'));
+          if(m) return m;
+        }
+        // anonymous value like ?=dark -> key is ''
+        if(params.has('')){
+          var v = normalizeThemeCode(params.get(''));
+          if(v) return v;
+        }
+        // key-only like ?dark
+        for(var pair of params.entries()){
+          var k = pair[0], val = pair[1];
+          if(k && !val){
+            var n = normalizeThemeCode(k);
+            if(n) return n;
+          }
+        }
+        // check hash
+        if(window.location.hash){
+          var hash = window.location.hash.replace(/^#/, '');
+          var hp = new URLSearchParams(hash);
+          if(hp.has('theme')){
+            var ht = normalizeThemeCode(hp.get('theme'));
+            if(ht) return ht;
+          }
+          if(hp.has('mode')){
+            var hm = normalizeThemeCode(hp.get('mode'));
+            if(hm) return hm;
+          }
+          if(hp.has('')){
+            var hv = normalizeThemeCode(hp.get(''));
+            if(hv) return hv;
+          }
+          // hash like #dark or #light
+          if(!hash.includes('=')){
+            var raw = normalizeThemeCode(hash);
+            if(raw) return raw;
+          }
+        }
+      }catch(e){}
+      return null;
+    })();
+
+    if(urlTheme === 'dark'){
+      document.documentElement.setAttribute('data-theme','dark');
+    } else if(urlTheme === 'light'){
+      document.documentElement.removeAttribute('data-theme');
+    }
+
     // If host app wants to force language, it can call window.setSiteLang('ja'|'en') via WKWebView evaluateJavaScript
     window.setSiteLang = function(l){
       if(l === 'ja' || l === 'en') setLang(l);
+    };
+
+    // Host app can force theme via window.setSiteTheme('dark'|'light')
+    window.setSiteTheme = function(t){
+      if(t === 'dark'){
+        document.documentElement.setAttribute('data-theme','dark');
+      } else if(t === 'light'){
+        document.documentElement.removeAttribute('data-theme');
+      }
     };
   });
 })();

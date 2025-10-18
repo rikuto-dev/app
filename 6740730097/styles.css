@@ -13,6 +13,32 @@
   --radius:12px;
 }
 
+/* Dark theme overrides */
+[data-theme="dark"]{
+  /* iPhone-like dark gray palette */
+  --bg:#1c1c1e; /* system background (iPhone default dark) */
+  --card:#2c2c2e; /* secondary background for cards */
+  --fg:#ffffff; /* primary text (white) */
+  --accent:#0a84ff; /* iOS blue - primary accent */
+  --muted:#9aa0a6; /* muted text */
+}
+
+/* Ensure lang buttons remain visible in dark mode even when not selected */
+[data-theme="dark"] .lang-switch button{
+  border-color:rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  color:var(--fg);
+}
+[data-theme="dark"] .lang-switch button[aria-checked="true"]{
+  background:var(--accent);
+  color:#ffffff; /* selected button text should be white */
+  border-color:var(--accent);
+}
+
+/* Dark-mode specific UI tweaks */
+[data-theme="dark"] .accordion-item{border-top:1px solid rgba(255,255,255,0.06);}
+[data-theme="dark"] .hero{background:linear-gradient(90deg, rgba(10,132,255,0.18), rgba(72,163,255,0.08));}
+
 *{box-sizing:border-box}
 body{font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial; background:var(--bg); color:var(--fg); margin:0; padding:0;-webkit-font-smoothing:antialiased}
 
@@ -20,6 +46,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 h1{margin:0;font-size:20px}
 .lang-switch{display:flex;align-items:center}
 .lang-switch button{margin-left:8px;padding:8px 12px;border:1px solid rgba(15,23,33,0.06);background:transparent;border-radius:8px;cursor:pointer;font-weight:600;position:relative;z-index:1}
+.lang-switch button:first-child{margin-left:0}
 .lang-switch button[aria-checked="true"]{background:var(--accent);color:white;border-color:var(--accent);box-shadow:0 6px 18px rgba(11,114,255,0.12)}
 
 .container{max-width:900px;margin:28px auto;padding:0 16px}
@@ -67,5 +94,5 @@ details.accordion-item[open] .chev{transform:rotate(180deg)}
 details.accordion-item .accordion-content p{margin:0;color:var(--fg);line-height:1.6}
 
 @media (max-width:520px){
-  .hero{flex-direction:column;align-items:flex-start;gap:8px}
+  .hero{flex-direction:column;align-items:flex-start;gap:12px}
 }
